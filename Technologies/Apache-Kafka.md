@@ -32,7 +32,7 @@ Each topic is divided into partitions, to divide and store the data accross mult
 ### Consumer Groups
 
 These are group of consumers which together consume the whole topic.  
-Each consumer in a group gets to read from a single partition.  
+Each partition can be read by a single Consumer in a group at a time only.  
 If number of consumers > partitions -> then extra consumers remain idle.
 
 1 Topic can have n Partitions, each partition consumed by a consumer.   
@@ -289,3 +289,94 @@ Core components of Kafka:
 #### Trade-offs
 - Too few → bottleneck  - Consumer might wait for data.
 - Too many → overhead (open files, memory, rebalancing cost) - Consumers would have to manage multiple partition and thus increase network overhead.
+
+### 2. How do you ensure ordering?
+
+#### Rule  
+Ordering is guaranteed only within a partition
+
+#### Solutions
+- Use a key  
+        - e.g., userId, orderId
+- Same key → same partition → ordered
+
+#### Limitation
+No global ordering across partitions
+
+### 3. How do you scale consumers?
+
+A consumer group can have multiple consumers. At a time only one consumer from a consumer group is going to consumer a single partition the rest just remains idle, so scalling requires more partition and then more consumers.  
+  
+- Increase in Partition
+- Increase in Consumer in a consumer group. 
+
+Consumers in a Consumer Group <= Partition (full resource utilization of Connsumers)
+
+### 4. What happens if a consumer crashes?
+  
+- Kafka performs the reassignment of the partition to some other consumer
+- Processing using the last commited offset message is where it is resumed
+
+#### Risk
+- Reprocessing of the same message - duplicate. Kafka provides transactions to completely avoid dupliation. But Kafka uses at-most-once strategy by default.
+
+### 5. At-most-once vs At-least-once vs Exactly-once
+
+-  At-most-once  
+Commit offset before processing  
+No duplicates, but data loss possible  
+-  At-least-once (default)  
+Commit offset after processing  
+No data loss, duplicates possible  
+-  Exactly-once  
+Use Kafka transactions + idempotent producer  
+Higher complexity
+
+### 6. How do you design retry mechanisms?
+
+We design different topics:
+
+Main_Topic -> Retry_topic1 -> Retry_Topic2 -> DLQ
+
+- Use incremental delays
+- Prevent Infinite loops
+
+### 7. When do you increase partitions?
+
+- Consumer lag is high so we would want to decrease the load per partition.  
+- More Consumers and we need higher throughput.
+- Consumers are fully utilized.
+
+### 8. How do you ensure durability?
+  
+- Replication Factor >= 3
+- acks = all - all messages are acknowledeged and hence avoids miss.
+
+### 9. How do you design a real system (example)?
+
+Book My Show  
+Order processing:
+
+Topic - Orders  
+key - orderId  
+
+Consumer Groups:  
+Payment Service  
+Inventory Service  
+Notification Service  
+  
+Each group reads the topic seperately and fully.
+
+### 10. How to handle backpresser?
+
+- Increase Partition  
+- Increase Consumers in a Consumer Group  
+- Batch processing  
+- Bufferring for rate limiting.
+
+### Common Mistakes:
+
+- Too few partitions / consumers  
+- Too many partitions / consumers 
+- No retry or DLQ
+- No key -> No ordering 
