@@ -9,7 +9,7 @@ Publishers and Subscribers to topics of different events can now work independen
 
 ## Different Components of Kafka
 
-### Events
+### Events - Pull and Push modelrabit-mq
 
 An event logically is an occurrence of something at a specific time. In Kafka an event contains the following items:
 Key (optional): identifier (e.g., user ID)

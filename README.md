@@ -8,3 +8,7 @@ Store Notes for SDE Interview Preperation
 4. Rabbit MQ
 5. DLQ, Circuit Breaker. Retries.
 6. Observability and monitoring - Graffana, Prometheus
+7. Javascript
+8. OAuth, SAML, OAuth 2.0
+9. Python, Flask, FastAPI
+10. REST API, gRPC, 
