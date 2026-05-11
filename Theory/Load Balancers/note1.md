@@ -6,7 +6,7 @@ As the name suggests, these are piece of software or a hardware which sits in be
   
 Generally used as an entrypoint for requests coming from the web.
 
-
+---
 ## Types of LB Algorithms (Classification on type of configuration)
 
 ### Static Algorithms - Fixed Configuration
@@ -21,6 +21,7 @@ These are algorithms where LBs need to actively monitored for their health or so
   
 Eg: Least connection
 
+---
 ## LB Algorithms
 
 ### 1. Round Robin Scheduling 
@@ -47,17 +48,18 @@ Hashes the IP address of clients such that all request of that client is mapped 
   
 This is hashing based on URL i.e. requests are mapped to specific servers based on a specific path. Basically routing the requests to set of servers from path of the request.
 
-
+---
 ## Types of LBs (Classification on OSI Layer)
 
 Remember the Open System Intercommunication protocol of 7 layers - Physical, Data Link, Network, Transport, Session, Presentation, Application
 
 ### Layer 4 LBs - Transport Layer LBs
 
-These are aware of
+These ensure packets from a specific client always reaches the same server for a specific connection session. Content Agnostic. 
 
 ### Layer 7 LBs - Application Layer LBs
 
+---
 ## Types of LBs (Classification Based on Session Synchronization between LBs)
 
 ### Stateful - LB synchronization and sharing state
@@ -68,4 +70,7 @@ Stateful here just means LB have a state and must be shared across.
 
 ### Stateless - Independent LBs
 
-These LB might maintain record of sessions or not but they dont have to synchronize their states across LBs. They depend on local state for routing decisions.
+These LB might or might not maintain record of sessions but they dont have to synchronize their states across LBs. They depend on local state for routing decisions.
+
+---
+
