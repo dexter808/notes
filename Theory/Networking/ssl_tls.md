@@ -46,3 +46,9 @@ Both Parties now use the symmetric enc / dec using master key for communication.
 
 ## Extra Clarification
 The Symmetric Session Keys (the ones actually used to encrypt the data) are then derived from that Master Secret. Usually, they generate four keys: two for encryption (inbound/outbound) and two for integrity (MAC keys).
+
+### TLS Termination
+
+This means connection is converted from a HTTPS to HTTP for easier and faster processing.
+
+If happening at LB, it means the LB is performing the TLS handshake and other steps with the browser and then converting the content to HTTP and then passing it to the application servers.
