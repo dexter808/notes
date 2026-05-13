@@ -15,3 +15,5 @@ Logistics Manager
 This is the GPS.  
 
 ### Network Access (Data Link and Physical layer)
+
+This is the truck / roads.
