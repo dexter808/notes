@@ -81,3 +81,11 @@
     Role: The front-line workers in the local branch offices.
 
     Task: They are the ones who actually hand the product (the content) to the customer. They are the only ones the customer actually interacts with once they have the address.
+5. The Origin Server (The Factory): This is where the product is actually manufactured. It's usually far away and slow to reach, which is why we have branch offices (Edge Servers).
+6. The Distribution System (Logistics & Trucking): These are the internal trucks that take the product from the Factory (Origin) and deliver it to the Branch Offices (Edge Servers) so the employees have stock to sell.
+
+7. The Scrubbing Server (The Security Guards): They stand at the front gate. If a group of protesters or "bad actors" (DDoS attack) tries to rush the building to shut it down, the Scrubbing Server pulls them aside, inspects them, and only lets the "real customers" through.
+
+8. Tree-like Architecture (Regional Warehouses): If an Employee (Edge Server) runs out of stock, they don't call the Factory (Origin) directly. They call a Regional Warehouse (Parent Proxy) which is closer and faster, keeping the Factory from getting overwhelmed with phone calls.
+
+9. ISP/IXP Servers (Satellite Kiosks): These are like small vending machines placed directly inside the customer's own office building (the ISP), so the customer doesn't even have to leave their house to get the product.
