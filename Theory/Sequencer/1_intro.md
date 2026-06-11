@@ -50,3 +50,17 @@
     - 10 bits for total
         - 10 for machines - Offers 1024 machines in total.
 - 12 for concurrency - Same millisecond request can be accomodated.
+
+### Using Logical Clocks
+
+#### Lampart Clocks
+- Each process maintains a counter initialized to 0.
+- Before every local event the counter is incremented.
+- When a node send a message to another node to do something, it sends its clock + 1 (because sending a message is also counted as an event) timestamp to the other machine.
+- The oher node upon recieving the timestamp uses a timestamp using max(clock, recievedClock) + 1
+- This ensures the causality is maintained across nodes. 
+- Lamport timestamp alone is not enough to maintain globally unique timestamp. We can attach node id to make the timestamps unique.
+- Limitations -> Ordering is not maintained between 2 different order of events. 
+
+
+#### Vector Clocks
