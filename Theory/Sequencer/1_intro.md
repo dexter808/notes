@@ -60,7 +60,31 @@
 - The oher node upon recieving the timestamp uses a timestamp using max(clock, recievedClock) + 1
 - This ensures the causality is maintained across nodes. 
 - Lamport timestamp alone is not enough to maintain globally unique timestamp. We can attach node id to make the timestamps unique.
-- Limitations -> Ordering is not maintained between 2 different order of events. 
+- Limitations -> Complete Ordering is not maintained between 2 different order of events. Partial Ordering.
 
 
 #### Vector Clocks
+- These are mostly used for causality tracking and version conflict identification and resolution, mostly never used for IDs.
+- If we decide to use vector clocks as ids [0,1,2,3,4...], if we have 1000 nodes then we need 1000 * 8bit per id of storage and it does not scale very well.
+
+### True Time API
+- Google's Spann TrueTime API solves the time sync by giving a range of time interval.
+- It uses GPS time master and Atomic clocks in data centers to keep the uncertainity minimum.(<7ms)
+- We can use the true time range to generate a unique ID like this: 
+```
+<Time_Stamp 41 bits><Uncertainity 4 bits><Worker Node 10 bits><8 bits for sequence number>
+```
+- As long as the uncertainity are not overlping we should be good, but if they do overlap we cannot say the order of events with confidence.
+- Required infra is too expensive and complex.
+
+| ID Type | Uniquueness | Scalability | Availability | 64 Bit ID | Causality |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| UUID | Very Very High | ✓ | ✓ | x | x |
+| Centralized DB | ✓ | x | x | ✓ | ✓ |
+| Range Handler | ✓ | ✓ | weak | ✓ | x |
+| Unix Time Stamp | x | ✓ | ✓ | ✓ | x(same millisecond) |
+| Twitter Snowflake | ✓ | ✓ | ✓ | ✓ | weak |
+| Lampart Clock | ✓ | ✓ | ✓ | ✓ | weak |
+| Vector Clock | ✓ | x | ✓ | can exceed | ✓ |
+| TrueTime | ✓ | ✓ | High | ✓ | ✓ |
+
