@@ -34,9 +34,31 @@ hey
 ### Push Model
 - The server or a local agent sends the metrics to rhe monitoring system periodically. 
 - Server controls the polling and might overwhelm the monitoring system if it has less resource or if a lot of servers are configured then this may overwhelm the monitoring system.
+- Jobs can use the push model as they cannot expose endpoints or have live running servers.
 
 ### Pull Model
 - The monitoring system pulls from an exposed endpoint on the server.
 - The server stores in memory and serves the metric when requested.
 - The monitoring system controls the polling frequency.
 
+### Hybrid Model
+- If there are thounds of servers, then it becomes difficult to querry each of the services.
+- We use a hybrid pull and push model in such cases.
+- Multi Level Data collection services
+- Lowest level still gets the data using the pull model
+- Higher level accumulates the data and pushes the data periodically to the TSDBs.
+
+---
+
+## Components
+- Service Discovery: This is a task that the platform can help us identify the services we want to monitor. Kubernetes can help here.
+- Data Collection service - A collection service which can pull data from several places and push to a TSDB
+- TSDB - Prometheus can be used for a TSDB, which acts as a fast read/write storage.
+- Blob Storage for persistance.
+- Alerting system and other visualization systems can querry the blob storage or the TSDB to show real time monitoring patters like heat map and raise alarm if a specific rules is broken.
+
+## Visualization
+- Graffana provides a beautiful interface for visualization and configuration management.
+- Prometheus can provide the query system to power the visualizations.
+- Heat Maps, Graphs .. etc
+- These can show live events and monitor problems vbefore they even occur.
