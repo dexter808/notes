@@ -15,4 +15,4 @@
     - Tracing of the user
     - Location leak of the user
     - Credential, Passwords and Fingerrpints should be avoided as well.
-- Data houl be iencrypted to prevent ISP and middleboxes to modify the stats, or they can change the stats to save their SLAs.
+- Data should be encrypted to prevent ISP and middleboxes to modify the stats, or they can change the stats to save their SLAs.
